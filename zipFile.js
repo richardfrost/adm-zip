@@ -241,6 +241,8 @@ module.exports = function (/*String|Buffer*/input, /*Number*/inputType) {
 			}
 			if (entryList.length > 1) {
 				entryList.sort(function (a, b) {
+					// Patch to always ensure the file 'mimetype' is always the first file in the archive (Required for the EPUB format).
+					if (a.entryName === 'mimetype') { return -1; } else if (b.entryName === 'mimetype') { return 1; }
 					var nameA = a.entryName.toLowerCase();
 					var nameB = b.entryName.toLowerCase();
 					if (nameA < nameB) {
